@@ -6,7 +6,7 @@ app = FastAPI()
 # Configure CORS
 origins = [
     "http://localhost:3000",
-    "https://permissionless-six.vercel.app /"
+    "https://permissionless-six.vercel.app"
 ]
 app.add_middleware(
     CORSMiddleware,
