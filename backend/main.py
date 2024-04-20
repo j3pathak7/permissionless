@@ -1,7 +1,15 @@
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from langchain_openai import ChatOpenAI
+import langchain
 import openai
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -18,26 +26,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Set up OpenAI API
-openai.api_key = "sk-proj-UbnHMreyXUIBmhiLxqbiT3BlbkFJsYreB3VRFRo5JpSw6dl5"
+# Set up LangChain
+# llm = ChatOpenAI(api_key="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")
+llm = ChatOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You will answer queries related to various Indian Government policies."),
+    ("user", "{input}")
+])
+output_parser = StrOutputParser()
+chain = prompt | llm | output_parser
+
+# Define the generate_response function
+
+
+def generate_response(query: str):
+    response = chain.invoke({"input": query})
+    return response
 
 
 @app.post("/chat")
 async def chat(message: str = Form(...)):
-    # Use OpenAI's chat functionality
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=message,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
-
-    # Extract the generated text from the response
-    generated_text = response.choices[0].text.strip()
-
-    return {"response": generated_text}
+    response = generate_response(message)
+    return {"response": response}
 
 
 @app.get("/")
