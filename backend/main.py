@@ -31,7 +31,7 @@ if not claude_api_key:
         "CLAUDE_API_KEY environment variable is not set or is empty")
 # Add model_name parameter
 llm = ChatAnthropic(api_key=claude_api_key,
-                    model_name="claude-3-opus-20240229")
+                    model_name="claude-1.3")
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You will answer queries related to various Indian Government policies."),
