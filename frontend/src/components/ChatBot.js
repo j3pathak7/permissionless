@@ -86,42 +86,55 @@ const ChatBox = () => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-2 py-8 md:px-8">
-      <h1 className="head_text m-2 md:m-8">
-        Empowering Citizens Through
-        <br className="max-md:hidden" />
-        <span className="orange_gradient "> Policy Education</span>
-      </h1>
-      <h2 className="desc">
-        Unlocking the Power of Knowledge to Navigate Government Policies
-      </h2>
-      <div className="m-4">
-        <FAQPopup faqs={FAQs} handleFAQClick={handleFAQClick} />
-      </div>
-      <div className="w-full summary_box max-w-lg max-h-96 overflow-scroll">
-        <MessageList
-          messages={messages}
-          isTyping={isTyping}
-          dotCount={dotCount}
-        />
-        <div ref={messagesEndRef} />
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex mt-4 w-full max-w-lg relative justify-center items-center"
-      >
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your query..."
-          className="url_input peer"
-        />
-        <button type="submit" className="submit_btn">
-          <p>↵</p>
+    <>
+      <nav className="flex justify-end items-center w-full md:mt-10 pt-3">
+        <button
+          type="button"
+          onClick={() =>
+            window.open("https://github.com/j3pathak7/permissionless", "_blank")
+          }
+          className="black_btn"
+        >
+          GitHub
         </button>
-      </form>
-    </div>
+      </nav>
+      <div className="flex flex-col items-center justify-center min-h-screen px-2 py-8 md:px-8">
+        <h1 className="head_text m-2 md:m-8">
+          Empowering Citizens Through
+          <br className="max-md:hidden" />
+          <span className="orange_gradient "> Policy Education</span>
+        </h1>
+        <h2 className="desc">
+          Unlocking the Power of Knowledge to Navigate Government Policies
+        </h2>
+        <div className="m-4">
+          <FAQPopup faqs={FAQs} handleFAQClick={handleFAQClick} />
+        </div>
+        <div className="w-full summary_box max-w-lg max-h-96 overflow-scroll">
+          <MessageList
+            messages={messages}
+            isTyping={isTyping}
+            dotCount={dotCount}
+          />
+          <div ref={messagesEndRef} />
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className="flex mt-4 w-full max-w-lg relative justify-center items-center"
+        >
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type your query..."
+            className="url_input peer"
+          />
+          <button type="submit" className="submit_btn">
+            <p>↵</p>
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
