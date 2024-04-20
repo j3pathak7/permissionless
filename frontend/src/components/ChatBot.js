@@ -5,6 +5,7 @@ import axios from "axios";
 const ChatBot = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
   const handleSubmit = async (e) => {
@@ -13,6 +14,7 @@ const ChatBot = () => {
       ...prevMessages,
       { sender: "user", text: message },
     ]);
+    setIsTyping(true); // Set isTyping to true when sending a message
 
     try {
       const res = await axios.post(
@@ -28,9 +30,11 @@ const ChatBot = () => {
         ...prevMessages,
         { sender: "chatbot", text: res.data.response },
       ]);
+      setIsTyping(false); // Set isTyping to false when response is received
       setMessage("");
     } catch (err) {
       console.error(err);
+      setIsTyping(false); // Set isTyping to false in case of an error
     }
   };
 
@@ -61,6 +65,13 @@ const ChatBot = () => {
               </div>
             </div>
           ))}
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className="p-4 rounded-lg shadow-md bg-white text-black">
+                <p>...</p>
+              </div>
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
       </div>
