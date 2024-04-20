@@ -1,14 +1,13 @@
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 from langchain_openai import ChatOpenAI
 import langchain
-import openai
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from .env file
 load_dotenv()
 
 app = FastAPI()
@@ -27,7 +26,12 @@ app.add_middleware(
 )
 
 # Set up LangChain
-llm = ChatOpenAI(api_key=os.environ.get("key"))
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError(
+        "OPENAI_API_KEY environment variable is not set or is empty")
+
+llm = ChatOpenAI(api_key=openai_api_key)
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You will answer queries related to various Indian Government policies."),
     ("user", "{input}")
