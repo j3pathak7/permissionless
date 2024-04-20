@@ -34,7 +34,7 @@ llm = ChatAnthropic(api_key=claude_api_key,
                     model_name="claude-3-opus-20240229")
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You will answer queries related to various Indian Government policies."),
+    ("system", "You will answer queries related to various Indian Government policies. Give short responses"),
     ("user", "{input}")
 ])
 output_parser = StrOutputParser()
