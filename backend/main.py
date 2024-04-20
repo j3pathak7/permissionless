@@ -28,7 +28,7 @@ app.add_middleware(
 
 # Set up LangChain
 # llm = ChatOpenAI(api_key="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")
-llm = ChatOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+llm = ChatOpenAI(api_key=os.environ.get("key"))
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You will answer queries related to various Indian Government policies."),
     ("user", "{input}")
