@@ -3,13 +3,12 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FAQs } from "@/utils/constants";
 import MessageList from "./MessageList";
+import FAQButtons from "./Faq";
 import FAQAccordion from "./FAQAccordion";
-
-const ChatBox = () => {
+const Hero = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [dotCount, setDotCount] = useState(0);
   const messagesEndRef = useRef(null);
 
   const handleSubmit = async (e) => {
@@ -19,12 +18,7 @@ const ChatBox = () => {
       { sender: "user", text: message },
     ]);
     setIsTyping(true);
-
     try {
-      const interval = setInterval(() => {
-        setDotCount((prevDotCount) => (prevDotCount + 1) % 3);
-      }, 300);
-
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/chat`,
         { message },
@@ -34,20 +28,15 @@ const ChatBox = () => {
           },
         }
       );
-
-      clearInterval(interval);
-
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: "chatbot", text: res.data.response },
       ]);
       setIsTyping(false);
       setMessage("");
-      setDotCount(0);
     } catch (err) {
       console.error(err);
       setIsTyping(false);
-      setDotCount(0);
     }
   };
 
@@ -58,8 +47,10 @@ const ChatBox = () => {
       { sender: "user", text: faq },
     ]);
     setIsTyping(true);
+
     const faqMessage = { message: faq };
     const encodedMessage = new URLSearchParams(faqMessage).toString();
+
     axios
       .post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chat`, encodedMessage, {
         headers: {
@@ -85,38 +76,44 @@ const ChatBox = () => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-2 py-8 md:px-8">
-      <h1 className="head_text m-2 md:m-8">
-        Policy Guide -
-        <br className="max-md:hidden" />
-        <span className="orange_gradient "> OpenAI GPT-4</span>
-      </h1>
-      <FAQAccordion faqs={FAQs} handleFAQClick={handleFAQClick} />
-      <div className="w-full summary_box max-w-lg max-h-96 overflow-scroll">
-        <MessageList
-          messages={messages}
-          isTyping={isTyping}
-          dotCount={dotCount}
-        />
+    <>
+      <header className="w-full flex justify-center items-center flex-col">
+        <h1 className="head_text">
+          Government Policy Guide <br className="max-md:hidden" />
+          <span className="orange_gradient ">OpenAI GPT-4</span>
+        </h1>
+        <h2 className="desc">
+          Simplify your reading with Summize, an open-source article summarizer
+          that transforms lengthy articles into clear and concise summaries
+        </h2>
+      </header>
+      <div className="h-32 overflow-scroll m-4">
+        <FAQAccordion faqs={FAQs} handleFAQClick={handleFAQClick} />
+      </div>
+      <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full max-w-lg overflow-auto">
+        <MessageList messages={messages} isTyping={isTyping} />
         <div ref={messagesEndRef} />
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex mt-4 w-full relative justify-center items-center"
+        className="flex space-x-4 mt-4 w-full max-w-md"
       >
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your query..."
-          className="url_input peer"
+          placeholder="Type your message..."
+          className="flex-grow p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button type="submit" className="submit_btn">
-          <p>↵</p>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Send
         </button>
       </form>
-    </div>
+    </>
   );
 };
 
-export default ChatBox;
+export default Hero;
