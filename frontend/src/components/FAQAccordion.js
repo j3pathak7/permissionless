@@ -1,62 +1,52 @@
 import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
-
-const FAQAccordion = ({ faqs, handleFAQClick }) => {
-  const [showFAQs, setShowFAQs] = useState(false);
-  const [expandedIndex, setExpandedIndex] = useState(null);
-
-  const toggleFAQs = () => {
-    setShowFAQs(!showFAQs);
+import { FaTimes } from "react-icons/fa";
+const FAQPopup = ({ faqs, handleFAQClick }) => {
+  const [showPopup, setShowPopup] = useState(false);
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
   };
-
-  const toggleAccordion = (index) => {
-    if (expandedIndex === index) {
-      setExpandedIndex(null);
-      setShowFAQs(false); // Hide the accordion
-    } else {
-      setExpandedIndex(index);
-    }
-  };
-
   return (
-    <div className="mt-4 w-full max-w-md">
-      <div className="flex justify-between items-center">
-        <button
-          onClick={toggleFAQs}
-          className="focus:outline-none flex justify-end items-center gap-4"
+    <div>
+      <button onClick={togglePopup} className="orange_btn">
+        FAQs
+      </button>
+      {showPopup && (
+        <div
+          className="fixed top-0 left-0 w-full h-screen bg-gray-500 bg-opacity-50 flex justify-center items-center md:p-4 lg:p-8 z-50"
+          role="dialog"
+          aria-modal="true"
         >
-          <h2 className="text-md font-bold">FAQs</h2>
-          <FaChevronDown
-            className={`text-gray-500 transition-transform ${
-              showFAQs ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-      </div>
-      {showFAQs && (
-        <div className="border border-gray-300 rounded-md">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className={`border-b border-gray-300 last:border-b-0 ${
-                expandedIndex === index ? "bg-blue-100" : ""
-              }`}
-            >
-              <button
-                onClick={() => {
-                  handleFAQClick(faq);
-                  toggleAccordion(index);
-                }}
-                className="w-full flex justify-between items-center px-4 py-3 text-left focus:outline-none"
-              >
-                <span>{faq}</span>
+          <div
+            className="bg-white text-black rounded-md p-4 w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
+            aria-labelledby="faq-popup-title"
+          >
+            <h2 id="faq-popup-title" className="text-lg font-bold mb-4">
+              FAQs
+            </h2>
+            <ul>
+              {faqs.map((faq, index) => (
+                <li key={index}>
+                  <button
+                    onClick={() => {
+                      handleFAQClick(faq);
+                      togglePopup();
+                    }}
+                    className="w-full text-left focus:outline-none py-2 px-4 hover:bg-amber-50"
+                  >
+                    {faq}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center justify-center">
+              <button onClick={togglePopup} className="cancel_btn">
+                Cancel
               </button>
             </div>
-          ))}
+          </div>
         </div>
       )}
     </div>
   );
 };
-
-export default FAQAccordion;
+export default FAQPopup;

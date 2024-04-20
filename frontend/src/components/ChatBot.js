@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FAQs } from "@/utils/constants";
 import MessageList from "./MessageList";
-import FAQAccordion from "./FAQAccordion";
+
+import FAQPopup from "./FAQAccordion";
 
 const ChatBox = () => {
   const [message, setMessage] = useState("");
@@ -87,11 +88,16 @@ const ChatBox = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-2 py-8 md:px-8">
       <h1 className="head_text m-2 md:m-8">
-        Policy Guide -
+        Empowering Citizens Through
         <br className="max-md:hidden" />
-        <span className="orange_gradient "> OpenAI GPT-4</span>
+        <span className="orange_gradient "> Policy Education</span>
       </h1>
-      <FAQAccordion faqs={FAQs} handleFAQClick={handleFAQClick} />
+      <h2 className="desc">
+        Unlocking the Power of Knowledge to Navigate Government Policies
+      </h2>
+      <div className="m-4">
+        <FAQPopup faqs={FAQs} handleFAQClick={handleFAQClick} />
+      </div>
       <div className="w-full summary_box max-w-lg max-h-96 overflow-scroll">
         <MessageList
           messages={messages}
@@ -102,7 +108,7 @@ const ChatBox = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex mt-4 w-full relative justify-center items-center"
+        className="flex mt-4 w-full max-w-lg relative justify-center items-center"
       >
         <input
           type="text"
