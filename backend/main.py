@@ -57,3 +57,8 @@ async def chat(message: str = Form(...)):
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
+@app.get("/start")
+async def start():
+    return {"response": "Hello! How may I assist you with queries about Indian government policies today?"}

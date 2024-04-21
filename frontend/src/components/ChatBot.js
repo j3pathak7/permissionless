@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { FAQs } from "@/utils/constants";
 import MessageList from "./MessageList";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 import FAQPopup from "./FAQAccordion";
 
@@ -12,6 +13,24 @@ const ChatBox = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [dotCount, setDotCount] = useState(0);
   const messagesEndRef = useRef(null);
+  const [serverStatus, setServerStatus] = useState("Connecting to server"); // new state variable
+
+  useEffect(() => {
+    // Send a request to '/start' when the component mounts
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/start`)
+      .then((res) => {
+        setServerStatus(""); // update server status
+        setMessages([
+          ...messages,
+          { sender: "chatbot", text: res.data.response },
+        ]);
+      })
+      .catch((err) => {
+        console.error(err);
+        setServerStatus("Error connecting to server"); // update server status
+      });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -133,6 +152,22 @@ const ChatBox = () => {
             <p>↵</p>
           </button>
         </form>
+        <p
+          className={
+            serverStatus === "Error connecting to server"
+              ? "text-red-500 font-bold mt-4"
+              : "hidden"
+          }
+        >
+          <FaExclamationTriangle className="inline-block mr-2" />
+          {serverStatus}
+          <button
+            className="cancel_btn ml-2"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
+        </p>
       </div>
     </>
   );
