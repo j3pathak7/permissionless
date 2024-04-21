@@ -13,22 +13,21 @@ const ChatBox = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [dotCount, setDotCount] = useState(0);
   const messagesEndRef = useRef(null);
-  const [serverStatus, setServerStatus] = useState("Connecting to server"); // new state variable
+  const [serverStatus, setServerStatus] = useState("Connecting to server");
 
   useEffect(() => {
-    // Send a request to '/start' when the component mounts
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/start`)
       .then((res) => {
-        setServerStatus(""); // update server status
         setMessages([
           ...messages,
           { sender: "chatbot", text: res.data.response },
         ]);
+        setServerStatus(""); // Set serverStatus to an empty string on successful connection
       })
       .catch((err) => {
         console.error(err);
-        setServerStatus("Error connecting to server"); // update server status
+        setServerStatus("Error connecting to server"); // Update server status on error
       });
   }, []);
 
@@ -155,18 +154,24 @@ const ChatBox = () => {
         <p
           className={
             serverStatus === "Error connecting to server"
-              ? "text-red-500 font-bold mt-4"
+              ? "text-red-500 font-bold mt-4 flex items-center"
+              : serverStatus === "Connecting to server"
+              ? "text-gray-500 mt-4 flex items-center"
               : "hidden"
           }
         >
-          <FaExclamationTriangle className="inline-block mr-2" />
+          {serverStatus === "Error connecting to server" && (
+            <FaExclamationTriangle className="inline-block mr-2" />
+          )}
           {serverStatus}
-          <button
-            className="cancel_btn ml-2"
-            onClick={() => window.location.reload()}
-          >
-            Retry
-          </button>
+          {serverStatus === "Error connecting to server" && (
+            <button
+              className="cancel_btn ml-2"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+          )}
         </p>
       </div>
     </>
