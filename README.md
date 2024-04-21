@@ -26,13 +26,12 @@ This project aims to empower citizens by providing easy access to information ab
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/government-policy-chatbot.git```
+git clone https://github.com/your-username/government-policy-chatbot.git
+```
 
 1. Clone the repository:
 
 ```bash
 git clone https://github.com/your-username/government-policy-chatbot.git
 1. Clone the repository:
-
-```bash
-git clone https://github.com/your-username/government-policy-chatbot.git
+```
