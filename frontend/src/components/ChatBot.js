@@ -156,7 +156,7 @@ const ChatBox = () => {
             serverStatus === "Error connecting to server"
               ? "text-red-500 font-bold mt-4 flex items-center"
               : serverStatus === "Connecting to server"
-              ? "text-gray-500 mt-4 flex items-center"
+              ? "text-cyan-500 mt-4 flex items-center"
               : "hidden"
           }
         >
