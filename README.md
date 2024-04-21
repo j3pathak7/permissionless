@@ -69,11 +69,6 @@ This project aims to empower citizens by providing easy access to information ab
 
 3. **Access the chatbot interface in your browser at `http://localhost:3000`.**
 
-## Deployment
-
-- Deploy the FastAPI backend to Heroku using the provided Dockerfile.
-- Deploy the Next.js frontend to Vercel for seamless hosting and scaling.
-
 ## Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests to improve the project.
