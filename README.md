@@ -9,9 +9,7 @@ This project aims to empower citizens by providing easy access to information ab
 - **Frontend**: Next.js
 - **Backend**: FastAPI
 - **Natural Language Processing (NLP)**: Claude 3 Opus
-- **Deployment**:
- - Render (for FastAPI backend)
- - Vercel (for Next.js frontend)
+- **Deployment**: Docker, Heroku (for FastAPI backend), Vercel (for Next.js frontend)
 
 ## Features
 
@@ -23,15 +21,63 @@ This project aims to empower citizens by providing easy access to information ab
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
-```bash
-git clone https://github.com/your-username/government-policy-chatbot.git
-```
+   ```bash
+   git clone https://github.com/your-username/government-policy-chatbot.git
+   ```
 
-1. Clone the repository:
+2. **Navigate to the project directory:**
 
-```bash
-git clone https://github.com/your-username/government-policy-chatbot.git
-1. Clone the repository:
-```
+   ```bash
+   cd government-policy-chatbot
+   ```
+
+3. **Install dependencies:**
+
+   ```bash
+   # Install frontend dependencies
+   cd frontend
+   npm install
+
+   # Install backend dependencies
+   cd ../backend
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+1. **Start the FastAPI backend:**
+
+   ```bash
+   # Navigate to the backend directory
+   cd backend
+
+   # Start the FastAPI server
+   uvicorn main:app --reload
+   ```
+
+2. **Start the Next.js frontend:**
+
+   ```bash
+   # Navigate to the frontend directory
+   cd ../frontend
+
+   # Start the Next.js development server
+   npm run dev
+   ```
+
+3. **Access the chatbot interface in your browser at `http://localhost:3000`.**
+
+## Deployment
+
+- Deploy the FastAPI backend to Heroku using the provided Dockerfile.
+- Deploy the Next.js frontend to Vercel for seamless hosting and scaling.
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests to improve the project.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
