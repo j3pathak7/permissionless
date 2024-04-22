@@ -9,7 +9,7 @@ This project aims to empower citizens by providing easy access to information ab
 - **Frontend**: Next.js
 - **Backend**: FastAPI
 - **Natural Language Processing (NLP)**: Claude 3 Opus
-- **Deployment**: Docker, Heroku (for FastAPI backend), Vercel (for Next.js frontend)
+- **Deployment**: Render (for FastAPI backend), Vercel (for Next.js frontend)
 
 ## Features
 
