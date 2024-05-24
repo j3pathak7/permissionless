@@ -38,6 +38,7 @@ const ChatBox = () => {
       { sender: "user", text: message },
     ]);
     setIsTyping(true);
+    setMessage("");
 
     try {
       const interval = setInterval(() => {
@@ -61,7 +62,6 @@ const ChatBox = () => {
         { sender: "chatbot", text: res.data.response },
       ]);
       setIsTyping(false);
-      setMessage("");
       setDotCount(0);
     } catch (err) {
       console.error(err);
